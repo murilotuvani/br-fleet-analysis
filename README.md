@@ -63,7 +63,7 @@ docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v /tmp/data:/v
 
 - Linux / Mac for the PostgreSQL database:
 ```bash
-docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v /tmp/data:/var/lib/postgresql/data -d mysql
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /tmp/data:/var/lib/postgresql -d postgres
 ```
 
 - Linux / Mac for the MongoDB database:
@@ -110,5 +110,21 @@ db.fleet_month.find({ $expr: { $in: [{ $month: "$month" },[12]]}}, { datasource_
 3) Building the dash board.
 4) Making some analysis.
 
+## Import the datasources list
 
-## L
+```bash
+
+```
+
+## Processing downloaded data
+
+Run the following command to process the downloaded data:
+
+```bash
+cd processing_data
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install pandas sqlalchemy psycopg2-binary pymongo pymysql kagglehub openpyxl
+python3 process_txt_files.py
+```
