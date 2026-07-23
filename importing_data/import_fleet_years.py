@@ -1,11 +1,13 @@
+import pandas as pd
 from sqlalchemy import create_engine
-from sqlalchemy.types import CHAR, VARCHAR, SMALLINT
+from sqlalchemy.types import CHAR, VARCHAR, SMALLINT, DATE
 from sqlalchemy.dialects.mysql import BIGINT  # Para conseguir usar UNSIGNED
 from urllib.parse import quote
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
-renavam_file = '/Users/murilotuvani/projects/br-fleet-analysis/datasources/datasources_renavam.xlsx'
+#renavam_file = '/Users/murilotuvani/projects/br-fleet-analysis/datasources/datasources_renavam.xlsx'
+renavam_file = '../datasources/datasources_renavam.xlsx'
 renavam_df = pd.read_excel(renavam_file)
 
 renavam_df.head()

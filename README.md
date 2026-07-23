@@ -13,6 +13,7 @@ To make this analysis we will need to ingest the data, then elaborate the dashbo
 docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql
 docker exec -it mysql /bin/bash
 mysql -uroot -h127.0.0.1 -proot
+create database fleet;
 create user fleet_analyst identified by 'superSecret';
 grant all on fleet.* to fleet_analyst;
 flush privileges;
@@ -54,6 +55,18 @@ mongodb://fleet_analyst:superSecret@127.0.0.1:27017/fleet?authSource=admin
 ```
 All files for January and July.
 
+Run the importing scripts:
+```bash
+cd importing_data 
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install pandas sqlalchemy psycopg2-binary pymongo pymysql kagglehub openpyxl
+pip freeze > requirements.txt
+python3 import_fipe.py
+python3 import_fleet_years.py
+```
+
 MySQL
 ```sql
 select * from fleet_month where month(month) in (1,7);
@@ -65,13 +78,13 @@ SELECT * FROM fleet_month WHERE EXTRACT(MONTH FROM month) IN (1, 7);
 ```
 
 MongoDB
+
+Deciding with we will use two months or only one month.
 ```javascript
 db.fleet_month.find({ $expr: { $in: [{ $month: "$month" },[1, 7]]}})
+db.fleet_month.find({ $expr: { $in: [{ $month: "$month" },[12]]}})
 ```
 
-
-
-3) 
 2) Importing the data and sani.
 3) 
 3) Building the dash board.
