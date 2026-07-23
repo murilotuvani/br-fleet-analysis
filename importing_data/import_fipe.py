@@ -12,7 +12,7 @@ from urllib.parse import quote
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
-echo("Downloading FIPE data ...")
+print("Downloading FIPE data ...")
 # 1. Baixa e descompacta automaticamente o dataset
 path = kagglehub.dataset_download("franckepeixoto/tabela-fipe")
 
@@ -32,7 +32,7 @@ df_fipe = fdf[['codigoFipe', 'marca', 'modelo', 'anoModelo', 'modelo_base']].dro
 
 # Importint into MongoDB
 mongo_url = "mongodb://fleet_analyst:superSecret@127.0.0.1:27017/fleet?authSource=admin"
-echo("Start importing data to databases ...")
+print("Start importing data to databases ...")
 try:
     # Cria a conexão com o MongoDB
     client = MongoClient(mongo_url)
