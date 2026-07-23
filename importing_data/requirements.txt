@@ -17,6 +17,7 @@ PyMySQL==1.2.0
 python-dateutil==2.9.0.post0
 PyYAML==6.0.3
 requests==2.34.2
+rarfile==4.2
 six==1.17.0
 SQLAlchemy==2.0.51
 tqdm==4.69.0
