@@ -29,7 +29,7 @@ create database fleet OWNER fleet_analyst;
  ```
 
  - MongoDB
- ```bash
+```bash
 docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret mongo
 docker exec -it mongo /bin/bash
 mongosh -u mongoadmin -p secret
@@ -53,6 +53,25 @@ If you create the user in the admin database, then you'll need to change the log
 ```
 mongodb://fleet_analyst:superSecret@127.0.0.1:27017/fleet?authSource=admin
 ```
+### Small disks
+
+For PCs with small disks, you may want to specify a differente volume for the database data. For example, in Linux you can use the following command to create a volume in /tmp/data:
+- Linux / Mac for the MySQL database:
+```bash
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v /tmp/data:/var/lib/mysql -d mysql
+```
+
+- Linux / Mac for the PostgreSQL database:
+```bash
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v /tmp/data:/var/lib/postgresql/data -d mysql
+```
+
+- Linux / Mac for the MongoDB database:
+```bash
+docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret -v /tmp/data:/data/db mongo
+```
+
+## Downloading the data
 All files for January and July.
 
 Run the importing scripts:
