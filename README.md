@@ -83,6 +83,7 @@ Deciding with we will use two months or only one month.
 ```javascript
 db.fleet_month.find({ $expr: { $in: [{ $month: "$month" },[1, 7]]}})
 db.fleet_month.find({ $expr: { $in: [{ $month: "$month" },[12]]}})
+db.fleet_month.find({ $expr: { $in: [{ $month: "$month" },[12]]}}, { datasource_url: 1, _id: 0});
 ```
 
 2) Importing the data and sani.
