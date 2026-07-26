@@ -6,6 +6,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Instala as bibliotecas do Python
-RUN pip install --no-cache-dir pandas pandas-access
+RUN pip install --no-cache-dir pandas pandas-access pymongo
 
 WORKDIR /app
