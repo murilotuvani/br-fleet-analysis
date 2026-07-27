@@ -80,7 +80,7 @@ cd importing_data
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install pandas sqlalchemy psycopg2-binary pymongo pymysql kagglehub openpyxl
+pip install pandas sqlalchemy psycopg2-binary pymongo pymysql kagglehub openpyxl 
 pip freeze > requirements.txt
 python3 import_fipe.py
 python3 import_fleet_years.py
@@ -128,3 +128,14 @@ pip install --upgrade pip
 pip install pandas sqlalchemy psycopg2-binary pymongo pymysql kagglehub openpyxl
 python3 process_txt_files.py
 ```
+
+## Analysing the attributes names
+
+```javascript
+db.fleet.aggregate([
+  { $project: { arrayDeCampos: { $objectToArray: "$$ROOT" } } },
+  { $unwind: "$arrayDeCampos" },
+  { $group: { _id: null, todosAtributos: { $addToSet: "$arrayDeCampos.k" } } }
+])
+```
+
