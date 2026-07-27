@@ -25,8 +25,19 @@ import io
 import subprocess
 import pandas as pd
 
-#mdb_path = "/data/arquivo.mdb"
-mdb_path = "/data/arquivo.accdb"
+from pathlib import Path
+import sys
+
+path_mdb = Path("/data/arquivo.mdb")
+path_accdb = Path("/data/arquivo.accdb")
+
+if path_mdb.is_file():
+    mdb_path = str(path_mdb)
+elif path_accdb.is_file():
+    mdb_path = str(path_accdb)
+else:
+    print("No file found")
+    sys.exit()
 
 # 1. Lista as tabelas usando mdb-tables com delimitador de quebra de linha (-1)
 # Isso impede que o mdbtools se confunda com os espaços no nome da tabela!
@@ -44,7 +55,51 @@ if tabelas:
     csv_bytes = subprocess.check_output(["mdb-export", mdb_path, nome_tabela])
 
     # 3. Carrega o CSV direto para o DataFrame do pandas sem salvar em disco
-    df = pd.read_csv(io.BytesIO(csv_bytes))
+    header_row = 1 if mdb_path.lower().endswith('.accdb') else 0 # Se for .accdb, ignora a primeira linha de cabeçalho
+    df = pd.read_csv(io.BytesIO(csv_bytes), header=header_row)
+
+    df.rename(
+        columns={
+            'UF': 'state',
+            'MunicÃ\xadpio': 'city',
+            'Ano FabricaÃ§Ã£o VeÃ\xadculo CRV': 'makeYear',
+            'Qtd. VeÃ\xadculos': 'Qtd. Veículos'
+        },
+        inplace=True
+    )
+
+    df.rename(
+        columns={
+            'MUNICÍPIO': 'city',
+            'MARCA MODELO': 'brandModel',
+            'Ano FabricaÃ§Ã£o VeÃ\xadculo CRV': 'makeYear',
+            'QT DE VEÍCULOS': 'quantity'
+        },
+        inplace=True
+    )
+
+    df.rename(
+        columns={
+            'Município': 'city',
+            'Marca Modelo': 'brandModel',
+            'Ano FabricaÃ§Ã£o VeÃ\xadculo CRV': 'makeYear',
+            'QT DE VEÍCULOS': 'quantity'
+        },
+        inplace=True
+    )
+
+    df.rename(
+        columns={
+            'Município': 'city',
+            'Marca Modelo': 'brandModel',
+            'Ano Fabricação Veículo CRV': 'makeYear',
+            'Qtd. Veículos': 'quantity'
+        },
+        inplace=True
+    )
+
+    if header_row == 1:
+        df.drop(columns=['1'], inplace=True)
 
     print("\nDataFrame carregado com sucesso!")
     print(df.head())
