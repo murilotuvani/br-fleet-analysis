@@ -60,8 +60,19 @@ For PCs with small disks, you may want to specify a differente volume for the da
 ```bash
 docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v /tmp/data:/var/lib/mysql -d mysql
 ```
+- Windows for the MySQL database:
+ 
+```bash
+docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -v "X:\tmp\mysql\data:/var/lib/mysql" -d mysql
+```
 
 - Linux / Mac for the PostgreSQL database:
+```bash
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /tmp/data:/var/lib/postgresql -d postgres
+```
+
+- Windows for the MySQL database:
+ 
 ```bash
 docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /tmp/data:/var/lib/postgresql -d postgres
 ```
@@ -70,6 +81,14 @@ docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /tmp/da
 ```bash
 docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret -v /tmp/data:/data/db mongo
 ```
+
+- Windows for the MySQL database:
+ 
+```bash
+docker run -d --name mongo -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=mongoadmin -e MONGO_INITDB_ROOT_PASSWORD=secret -v "X:\tmp\mongo\data:/data/db" mongo
+```
+
+
 
 ## Downloading the data
 All files for January and July.
