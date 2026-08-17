@@ -74,7 +74,7 @@ docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /tmp/da
 - Windows for the MySQL database:
  
 ```bash
-docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v /tmp/data:/var/lib/postgresql -d postgres
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -v "X:\tmp\psql\data:/var/lib/postgresql" -d postgres
 ```
 
 - Linux / Mac for the MongoDB database:
